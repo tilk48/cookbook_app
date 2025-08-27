@@ -1,0 +1,78 @@
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+ShoppingList _$ShoppingListFromJson(Map<String, dynamic> json) => ShoppingList(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      createdAt: DateTime.parse(json['created_at'] as String),
+      updateAt: DateTime.parse(json['update_at'] as String),
+      listItems: (json['list_items'] as List<dynamic>)
+          .map((e) => ShoppingListItem.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$ShoppingListToJson(ShoppingList instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'created_at': instance.createdAt.toIso8601String(),
+      'update_at': instance.updateAt.toIso8601String(),
+      'list_items': instance.listItems,
+    };
+
+ShoppingListItem _$ShoppingListItemFromJson(Map<String, dynamic> json) =>
+    ShoppingListItem(
+      id: json['id'] as String,
+      note: json['note'] as String,
+      quantity: (json['quantity'] as num).toDouble(),
+      unit: json['unit'] as String?,
+      food: json['food'] as String?,
+      checked: json['checked'] as bool,
+      position: (json['position'] as num).toInt(),
+      isFood: json['is_food'] as bool,
+    );
+
+Map<String, dynamic> _$ShoppingListItemToJson(ShoppingListItem instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'note': instance.note,
+      'quantity': instance.quantity,
+      'unit': instance.unit,
+      'food': instance.food,
+      'checked': instance.checked,
+      'position': instance.position,
+      'is_food': instance.isFood,
+    };
+
+CreateShoppingListRequest _$CreateShoppingListRequestFromJson(
+        Map<String, dynamic> json) =>
+    CreateShoppingListRequest(
+      name: json['name'] as String,
+    );
+
+Map<String, dynamic> _$CreateShoppingListRequestToJson(
+        CreateShoppingListRequest instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+    };
+
+CreateShoppingListItemRequest _$CreateShoppingListItemRequestFromJson(
+        Map<String, dynamic> json) =>
+    CreateShoppingListItemRequest(
+      note: json['note'] as String,
+      quantity: (json['quantity'] as num).toDouble(),
+      unit: json['unit'] as String?,
+      food: json['food'] as String?,
+      isFood: json['is_food'] as bool?,
+    );
+
+Map<String, dynamic> _$CreateShoppingListItemRequestToJson(
+        CreateShoppingListItemRequest instance) =>
+    <String, dynamic>{
+      'note': instance.note,
+      'quantity': instance.quantity,
+      'unit': instance.unit,
+      'food': instance.food,
+      'is_food': instance.isFood,
+    };

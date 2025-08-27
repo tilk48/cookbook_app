@@ -1,0 +1,364 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'recipe_models.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+RecipeSummary _$RecipeSummaryFromJson(Map<String, dynamic> json) =>
+    RecipeSummary(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      slug: json['slug'] as String,
+      description: json['description'] as String?,
+      image: json['image'] as String?,
+      recipeCategory: (json['recipe_category'] as List<dynamic>?)
+          ?.map((e) => RecipeCategory.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      tags: (json['tags'] as List<dynamic>?)
+          ?.map((e) => RecipeTag.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      rating: (json['rating'] as num?)?.toInt(),
+      dateAdded: json['date_added'] == null
+          ? null
+          : DateTime.parse(json['date_added'] as String),
+      dateUpdated: json['date_updated'] == null
+          ? null
+          : DateTime.parse(json['date_updated'] as String),
+    );
+
+Map<String, dynamic> _$RecipeSummaryToJson(RecipeSummary instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'slug': instance.slug,
+      'description': instance.description,
+      'image': instance.image,
+      'recipe_category': instance.recipeCategory,
+      'tags': instance.tags,
+      'rating': instance.rating,
+      'date_added': instance.dateAdded?.toIso8601String(),
+      'date_updated': instance.dateUpdated?.toIso8601String(),
+    };
+
+Recipe _$RecipeFromJson(Map<String, dynamic> json) => Recipe(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      slug: json['slug'] as String,
+      description: json['description'] as String?,
+      image: json['image'] as String?,
+      recipeCategory: (json['recipe_category'] as List<dynamic>?)
+          ?.map((e) => RecipeCategory.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      tags: (json['tags'] as List<dynamic>?)
+          ?.map((e) => RecipeTag.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      recipeIngredient: (json['recipe_ingredient'] as List<dynamic>?)
+          ?.map((e) => RecipeIngredient.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      recipeInstructions: (json['recipe_instructions'] as List<dynamic>?)
+          ?.map((e) => RecipeInstruction.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      nutrition: json['nutrition'] == null
+          ? null
+          : RecipeNutrition.fromJson(json['nutrition'] as Map<String, dynamic>),
+      settings: json['settings'] == null
+          ? null
+          : RecipeSettings.fromJson(json['settings'] as Map<String, dynamic>),
+      assets: (json['assets'] as List<dynamic>?)
+          ?.map((e) => RecipeAsset.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      notes: (json['notes'] as List<dynamic>?)
+          ?.map((e) => RecipeNote.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      recipeYield: json['recipe_yield'] as String?,
+      recipeServings: (json['recipe_servings'] as num?)?.toDouble(),
+      totalTime: json['totalTime'] as String?,
+      prepTime: json['prepTime'] as String?,
+      cookTime: json['cookTime'] as String?,
+      performTime: json['performTime'] as String?,
+      rating: (json['rating'] as num?)?.toInt(),
+      dateAdded: json['date_added'] == null
+          ? null
+          : DateTime.parse(json['date_added'] as String),
+      dateUpdated: json['date_updated'] == null
+          ? null
+          : DateTime.parse(json['date_updated'] as String),
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updateAt: json['update_at'] == null
+          ? null
+          : DateTime.parse(json['update_at'] as String),
+    );
+
+Map<String, dynamic> _$RecipeToJson(Recipe instance) => <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'slug': instance.slug,
+      'description': instance.description,
+      'image': instance.image,
+      'recipe_category': instance.recipeCategory,
+      'tags': instance.tags,
+      'recipe_ingredient': instance.recipeIngredient,
+      'recipe_instructions': instance.recipeInstructions,
+      'nutrition': instance.nutrition,
+      'settings': instance.settings,
+      'assets': instance.assets,
+      'notes': instance.notes,
+      'recipe_yield': instance.recipeYield,
+      'recipe_servings': instance.recipeServings,
+      'totalTime': instance.totalTime,
+      'prepTime': instance.prepTime,
+      'cookTime': instance.cookTime,
+      'performTime': instance.performTime,
+      'rating': instance.rating,
+      'date_added': instance.dateAdded?.toIso8601String(),
+      'date_updated': instance.dateUpdated?.toIso8601String(),
+      'created_at': instance.createdAt?.toIso8601String(),
+      'update_at': instance.updateAt?.toIso8601String(),
+    };
+
+RecipeCategory _$RecipeCategoryFromJson(Map<String, dynamic> json) =>
+    RecipeCategory(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      slug: json['slug'] as String,
+    );
+
+Map<String, dynamic> _$RecipeCategoryToJson(RecipeCategory instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'slug': instance.slug,
+    };
+
+RecipeTag _$RecipeTagFromJson(Map<String, dynamic> json) => RecipeTag(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      slug: json['slug'] as String,
+    );
+
+Map<String, dynamic> _$RecipeTagToJson(RecipeTag instance) => <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'slug': instance.slug,
+    };
+
+IngredientFood _$IngredientFoodFromJson(Map<String, dynamic> json) =>
+    IngredientFood(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      pluralName: json['plural_name'] as String?,
+      description: json['description'] as String?,
+    );
+
+Map<String, dynamic> _$IngredientFoodToJson(IngredientFood instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'plural_name': instance.pluralName,
+      'description': instance.description,
+    };
+
+IngredientUnit _$IngredientUnitFromJson(Map<String, dynamic> json) =>
+    IngredientUnit(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      pluralName: json['plural_name'] as String?,
+      description: json['description'] as String?,
+      abbreviation: json['abbreviation'] as String?,
+      pluralAbbreviation: json['plural_abbreviation'] as String?,
+      useAbbreviation: json['use_abbreviation'] as bool?,
+    );
+
+Map<String, dynamic> _$IngredientUnitToJson(IngredientUnit instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'plural_name': instance.pluralName,
+      'description': instance.description,
+      'abbreviation': instance.abbreviation,
+      'plural_abbreviation': instance.pluralAbbreviation,
+      'use_abbreviation': instance.useAbbreviation,
+    };
+
+RecipeIngredient _$RecipeIngredientFromJson(Map<String, dynamic> json) =>
+    RecipeIngredient(
+      title: json['title'] as String?,
+      note: json['note'] as String?,
+      unit: json['unit'] == null
+          ? null
+          : IngredientUnit.fromJson(json['unit'] as Map<String, dynamic>),
+      food: json['food'] == null
+          ? null
+          : IngredientFood.fromJson(json['food'] as Map<String, dynamic>),
+      disable_amount: json['disable_amount'] as bool?,
+      quantity: (json['quantity'] as num?)?.toDouble(),
+      originalText: json['original_text'] as String?,
+      referenceId: json['reference_id'] as String?,
+      display: json['display'] as String?,
+    );
+
+Map<String, dynamic> _$RecipeIngredientToJson(RecipeIngredient instance) =>
+    <String, dynamic>{
+      'title': instance.title,
+      'note': instance.note,
+      'unit': instance.unit,
+      'food': instance.food,
+      'disable_amount': instance.disable_amount,
+      'quantity': instance.quantity,
+      'original_text': instance.originalText,
+      'reference_id': instance.referenceId,
+      'display': instance.display,
+    };
+
+RecipeInstruction _$RecipeInstructionFromJson(Map<String, dynamic> json) =>
+    RecipeInstruction(
+      id: json['id'] as String?,
+      title: json['title'] as String?,
+      text: json['text'] as String?,
+      ingredientReferences: (json['ingredient_references'] as List<dynamic>?)
+          ?.map((e) => IngredientReference.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$RecipeInstructionToJson(RecipeInstruction instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'text': instance.text,
+      'ingredient_references': instance.ingredientReferences,
+    };
+
+IngredientReference _$IngredientReferenceFromJson(Map<String, dynamic> json) =>
+    IngredientReference(
+      referenceId: json['reference_id'] as String,
+    );
+
+Map<String, dynamic> _$IngredientReferenceToJson(
+        IngredientReference instance) =>
+    <String, dynamic>{
+      'reference_id': instance.referenceId,
+    };
+
+RecipeNutrition _$RecipeNutritionFromJson(Map<String, dynamic> json) =>
+    RecipeNutrition(
+      calories: json['calories'] as String?,
+      fatContent: json['fat_content'] as String?,
+      proteinContent: json['protein_content'] as String?,
+      carbohydrateContent: json['carbohydrate_content'] as String?,
+      fiberContent: json['fiber_content'] as String?,
+      sugarContent: json['sugar_content'] as String?,
+      sodiumContent: json['sodium_content'] as String?,
+    );
+
+Map<String, dynamic> _$RecipeNutritionToJson(RecipeNutrition instance) =>
+    <String, dynamic>{
+      'calories': instance.calories,
+      'fat_content': instance.fatContent,
+      'protein_content': instance.proteinContent,
+      'carbohydrate_content': instance.carbohydrateContent,
+      'fiber_content': instance.fiberContent,
+      'sugar_content': instance.sugarContent,
+      'sodium_content': instance.sodiumContent,
+    };
+
+RecipeSettings _$RecipeSettingsFromJson(Map<String, dynamic> json) =>
+    RecipeSettings(
+      isPublic: json['public'] as bool?,
+      showNutrition: json['show_nutrition'] as bool?,
+      showAssets: json['show_assets'] as bool?,
+      landscapeView: json['landscape_view'] as bool?,
+      disableComments: json['disable_comments'] as bool?,
+      disableAmount: json['disable_amount'] as bool?,
+      locked: json['locked'] as bool?,
+    );
+
+Map<String, dynamic> _$RecipeSettingsToJson(RecipeSettings instance) =>
+    <String, dynamic>{
+      'public': instance.isPublic,
+      'show_nutrition': instance.showNutrition,
+      'show_assets': instance.showAssets,
+      'landscape_view': instance.landscapeView,
+      'disable_comments': instance.disableComments,
+      'disable_amount': instance.disableAmount,
+      'locked': instance.locked,
+    };
+
+RecipeAsset _$RecipeAssetFromJson(Map<String, dynamic> json) => RecipeAsset(
+      name: json['name'] as String,
+      icon: json['icon'] as String,
+      fileName: json['file_name'] as String,
+    );
+
+Map<String, dynamic> _$RecipeAssetToJson(RecipeAsset instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'icon': instance.icon,
+      'file_name': instance.fileName,
+    };
+
+RecipeNote _$RecipeNoteFromJson(Map<String, dynamic> json) => RecipeNote(
+      id: json['id'] as String?,
+      title: json['title'] as String?,
+      text: json['text'] as String?,
+    );
+
+Map<String, dynamic> _$RecipeNoteToJson(RecipeNote instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'text': instance.text,
+    };
+
+CreateRecipeRequest _$CreateRecipeRequestFromJson(Map<String, dynamic> json) =>
+    CreateRecipeRequest(
+      name: json['name'] as String,
+      description: json['description'] as String?,
+      recipeCategory: (json['recipe_category'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      recipeIngredient: (json['recipe_ingredient'] as List<dynamic>?)
+          ?.map((e) => RecipeIngredient.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      recipeInstructions: (json['recipe_instructions'] as List<dynamic>?)
+          ?.map((e) =>
+              CreateRecipeInstruction.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      recipeYield: json['recipe_yield'] as String?,
+      totalTime: json['total_time'] as String?,
+      prepTime: json['prep_time'] as String?,
+      cookTime: json['cook_time'] as String?,
+    );
+
+Map<String, dynamic> _$CreateRecipeRequestToJson(
+        CreateRecipeRequest instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'description': instance.description,
+      'recipe_category': instance.recipeCategory,
+      'tags': instance.tags,
+      'recipe_ingredient': instance.recipeIngredient,
+      'recipe_instructions': instance.recipeInstructions,
+      'recipe_yield': instance.recipeYield,
+      'total_time': instance.totalTime,
+      'prep_time': instance.prepTime,
+      'cook_time': instance.cookTime,
+    };
+
+CreateRecipeInstruction _$CreateRecipeInstructionFromJson(
+        Map<String, dynamic> json) =>
+    CreateRecipeInstruction(
+      title: json['title'] as String,
+      text: json['text'] as String,
+    );
+
+Map<String, dynamic> _$CreateRecipeInstructionToJson(
+        CreateRecipeInstruction instance) =>
+    <String, dynamic>{
+      'title': instance.title,
+      'text': instance.text,
+    };
