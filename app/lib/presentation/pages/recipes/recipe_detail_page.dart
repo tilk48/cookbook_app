@@ -11,6 +11,7 @@ import 'widgets/ingredients_list.dart';
 import 'widgets/instructions_progress.dart';
 import 'widgets/instructions_list.dart';
 import 'widgets/recipe_section.dart';
+import 'widgets/recipe_actions_menu.dart';
 
 class RecipeDetailPage extends StatelessWidget {
   final String recipeSlug;
@@ -83,7 +84,13 @@ class _RecipeDetailView extends StatelessWidget {
                 floating: false,
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
-                  titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
+                  centerTitle: true,
+                  titlePadding: const EdgeInsets.only(
+                    left: 16,
+                    bottom: 16,
+                    right: 16,
+                    top: 10,
+                  ),
                   title: Text(
                     provider.recipe!.name,
                     style: const TextStyle(
@@ -100,20 +107,31 @@ class _RecipeDetailView extends StatelessWidget {
                   ),
                   background: Hero(
                     tag: 'recipe-image-${recipe.id}',
-                    child: AuthenticatedImage(
-                      imageUrl: provider.buildImageUrl(),
-                      fit: BoxFit.cover,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        AuthenticatedImage(
+                          imageUrl: provider.buildImageUrl(),
+                          fit: BoxFit.cover,
+                        ),
+                        Container(
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.bottomCenter,
+                              end: Alignment.center,
+                              colors: [
+                                Colors.black38,
+                                Colors.transparent,
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
                 actions: [
-                  IconButton(
-                    icon: Icon(
-                      provider.isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: provider.isFavorite ? Colors.red : Colors.white,
-                    ),
-                    onPressed: provider.toggleFavorite,
-                  ),
+                  RecipeActionsMenu(provider: provider),
                 ],
               ),
 
@@ -122,22 +140,22 @@ class _RecipeDetailView extends StatelessWidget {
                 delegate: SliverChildListDelegate([
                   // Recipe Header with Description
                   RecipeHeader(provider: provider),
-                  
+
                   // Recipe Stats (Time, Servings, etc.)
                   RecipeStats(provider: provider),
-                  
+
                   // Ingredients Section
                   if (provider.ingredients.isNotEmpty)
                     RecipeSection(
                       title: 'Ingredients (${provider.ingredients.length})',
                       icon: Icons.list_alt,
                       content: IngredientsList(provider: provider),
-                      headerWidget: provider.hasServingAdjustment 
+                      headerWidget: provider.hasServingAdjustment
                           ? ServingAdjustment(provider: provider)
                           : null,
                     ),
-                  
-                  // Instructions Section  
+
+                  // Instructions Section
                   if (provider.instructions.isNotEmpty)
                     RecipeSection(
                       title: 'Instructions',
@@ -156,5 +174,4 @@ class _RecipeDetailView extends StatelessWidget {
       },
     );
   }
-
 }
