@@ -13,7 +13,8 @@
       "Bash(flutter build:*)",
       "Bash(dart run build_runner:*)",
       "Bash(dart run:*)",
-      "Bash(dart:*)"
+      "Bash(dart:*)",
+      "Bash(mv:*)"
     ],
     "deny": [],
     "ask": []
