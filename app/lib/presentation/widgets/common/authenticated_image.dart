@@ -9,6 +9,9 @@ class AuthenticatedImage extends StatefulWidget {
   final BoxFit? fit;
   final Widget Function()? placeholderBuilder;
   final Widget Function(Object error)? errorBuilder;
+  // Test hook: override the image fetcher in tests to provide deterministic bytes
+  static Future<Uint8List> Function(String url, Map<String, String> headers)?
+      fetchOverride;
 
   const AuthenticatedImage({
     super.key,
@@ -72,10 +75,20 @@ class _AuthenticatedImageState extends State<AuthenticatedImage> {
       if (authProvider.isLoggedIn && authProvider.accessToken != null) {
         headers['Authorization'] = 'Bearer ${authProvider.accessToken}';
       }
-      final response = await http.get(
-        Uri.parse(widget.imageUrl),
-        headers: headers,
-      );
+      // Test override path
+      if (AuthenticatedImage.fetchOverride != null) {
+        final bytes =
+            await AuthenticatedImage.fetchOverride!(widget.imageUrl, headers);
+        if (!mounted) return;
+        setState(() {
+          _imageBytes = bytes;
+          _isLoading = false;
+        });
+        return;
+      }
+
+      final response =
+          await http.get(Uri.parse(widget.imageUrl), headers: headers);
 
       if (!mounted) return;
 

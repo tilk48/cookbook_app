@@ -251,6 +251,13 @@ class RecipeDetailProvider extends ChangeNotifier {
   String buildImageUrl() {
     if (_recipe == null) return '';
 
+    // Prefer explicit image URL if provided by the API
+    if (_recipe!.image != null &&
+        _recipe!.image!.isNotEmpty &&
+        _recipe!.image!.startsWith('http')) {
+      return _recipe!.image!;
+    }
+
     final baseUrl = _mealieClient.baseUrl.endsWith('/')
         ? _mealieClient.baseUrl.substring(0, _mealieClient.baseUrl.length - 1)
         : _mealieClient.baseUrl;
