@@ -7,11 +7,11 @@ class AppTheme {
   static const Color _primaryVariant = Color(0xFFD32F2F);
   static const Color _secondary = Color(0xFFFF8A65); // Orange accent
   static const Color _secondaryVariant = Color(0xFFFF5722);
-  
+
   static const Color _surface = Colors.white;
   static const Color _background = Color(0xFFFAFAFA);
   static const Color _error = Color(0xFFB00020);
-  
+
   static const Color _onPrimary = Colors.white;
   static const Color _onSecondary = Colors.white;
   static const Color _onSurface = Color(0xFF1A1A1A);
@@ -23,11 +23,11 @@ class AppTheme {
   static const Color _darkPrimaryVariant = Color(0xFFD32F2F);
   static const Color _darkSecondary = Color(0xFFFF7043);
   static const Color _darkSecondaryVariant = Color(0xFFFF5722);
-  
+
   static const Color _darkSurface = Color(0xFF1E1E1E);
   static const Color _darkBackground = Color(0xFF121212);
   static const Color _darkError = Color(0xFFCF6679);
-  
+
   static const Color _darkOnPrimary = Colors.black;
   static const Color _darkOnSecondary = Colors.black;
   static const Color _darkOnSurface = Color(0xFFE1E1E1);
@@ -38,7 +38,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
-      
+
       // Color scheme
       colorScheme: const ColorScheme(
         brightness: Brightness.light,
@@ -68,7 +68,7 @@ class AppTheme {
       ),
 
       // Card theme
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppConstants.borderRadius),
@@ -157,7 +157,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
-      
+
       // Color scheme
       colorScheme: const ColorScheme(
         brightness: Brightness.dark,
@@ -187,7 +187,7 @@ class AppTheme {
       ),
 
       // Card theme
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 4,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppConstants.borderRadius),
