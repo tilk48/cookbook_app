@@ -14,7 +14,8 @@
       "Bash(dart run build_runner:*)",
       "Bash(dart run:*)",
       "Bash(dart:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "Bash(touch:*)"
     ],
     "deny": [],
     "ask": []

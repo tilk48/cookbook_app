@@ -2,6 +2,8 @@
 
 A new Flutter project.
 
+> **Note:** This app is currently under active development and features may be incomplete or subject to change.
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.

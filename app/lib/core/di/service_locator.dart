@@ -32,6 +32,7 @@ import '../../domain/usecases/recipes/create_recipe_usecase.dart';
 import '../../domain/usecases/recipes/search_recipes_usecase.dart';
 import '../../presentation/providers/auth_provider.dart';
 import '../../presentation/providers/recipe_provider.dart';
+import '../../presentation/providers/recipe_create_provider.dart';
 
 final GetIt sl = GetIt.instance;
 
@@ -152,6 +153,11 @@ class ServiceLocator {
 
     // RecipeProvider using real API data
     sl.registerFactory(() => RecipeProvider(
+      mealieClient: sl<MealieClient>(),
+    ));
+
+    // RecipeCreateProvider for recipe creation and editing
+    sl.registerFactory(() => RecipeCreateProvider(
       mealieClient: sl<MealieClient>(),
     ));
   }

@@ -9,7 +9,8 @@ import '../../presentation/pages/auth/register_page.dart';
 import '../../presentation/pages/home/home_page.dart';
 import '../../presentation/pages/recipes/recipe_list_page.dart';
 import '../../presentation/pages/recipes/recipe_detail_page.dart';
-import '../../presentation/pages/recipes/recipe_create_page.dart';
+import '../../presentation/pages/recipes/recipe_create_entry_page.dart';
+import '../../presentation/pages/recipes/recipe_create_edit_page.dart' show RecipeCreateEditPage, RecipeCreateInitData;
 import '../../presentation/pages/recipes/recipe_edit_page.dart';
 import '../../presentation/pages/meal_plans/meal_plans_page.dart';
 import '../../presentation/pages/shopping_lists/shopping_lists_page.dart';
@@ -72,7 +73,16 @@ class AppRouter {
                   routes: [
                     GoRoute(
                       path: 'create',
-                      builder: (context, state) => const RecipeCreatePage(),
+                      builder: (context, state) => const RecipeCreateEntryPage(),
+                      routes: [
+                        GoRoute(
+                          path: 'edit',
+                          builder: (context, state) {
+                            final initData = state.extra as RecipeCreateInitData?;
+                            return RecipeCreateEditPage(initData: initData);
+                          },
+                        ),
+                      ],
                     ),
                     GoRoute(
                       path: ':slug',

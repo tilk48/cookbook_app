@@ -239,7 +239,7 @@ class _RecipeListPageState extends State<RecipeListPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Navigate to create recipe page
-          Navigator.of(context).pushNamed('/recipes/create');
+          context.go('/recipes/create');
         },
         child: const Icon(Icons.add),
         tooltip: 'Add Recipe',
@@ -314,7 +314,7 @@ class _RecipeListPageState extends State<RecipeListPage> {
             if (!hasActiveFilters)
               FilledButton.icon(
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/recipes/create');
+                  context.go('/recipes/create');
                 },
                 icon: const Icon(Icons.add),
                 label: const Text('Add Recipe'),

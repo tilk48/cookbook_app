@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:mealie_api/mealie_api.dart';
+import 'package:dio/dio.dart' as dio;
 
 /// CLI-based API test tool for testing Mealie API calls directly from command line
 class CliApiTest {
@@ -493,6 +494,140 @@ class CliApiTest {
     }
   }
 
+  /// Test recipe creation endpoints
+  Future<void> testRecipeCreation() async {
+    print('\n🧪 Testing Recipe Creation Endpoints...');
+    
+    try {
+      // Test URL parsing endpoint
+      print('\n🔗 Testing URL-based recipe creation...');
+      const testUrl = 'https://www.allrecipes.com/recipe/213742/cheesy-chicken-broccoli-casserole/';
+      print('🎯 Testing URL: $testUrl');
+      
+      final response = await _client.dio.post(
+        '/api/recipes/create/url',
+        data: {'url': testUrl},
+        options: dio.Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $_accessToken',
+          },
+        ),
+      );
+      
+      print('✅ URL recipe creation response:');
+      print('  - Status: ${response.statusCode}');
+      print('  - Response data type: ${response.data.runtimeType}');
+      print('  - Response data: ${response.data}');
+      
+      if (response.data is String) {
+        print('  - Created recipe slug: ${response.data}');
+        
+        // Try to fetch the created recipe to verify
+        final createdRecipe = await _client.recipes.getRecipe(response.data);
+        print('  - Verified recipe name: ${createdRecipe.name}');
+        print('  - Ingredients count: ${createdRecipe.recipeIngredient?.length ?? 0}');
+        print('  - Instructions count: ${createdRecipe.recipeInstructions?.length ?? 0}');
+      } else if (response.data is Map && response.data['slug'] != null) {
+        print('  - Created recipe slug: ${response.data['slug']}');
+        print('  - Recipe name: ${response.data['name'] ?? 'Unknown'}');
+      }
+      
+    } catch (e) {
+      print('❌ URL recipe creation error: $e');
+      if (e is dio.DioException && e.response != null) {
+        print('  - Status: ${e.response!.statusCode}');
+        print('  - Response: ${e.response!.data}');
+      }
+    }
+    
+    try {
+      // Test manual recipe creation
+      print('\n📝 Testing manual recipe creation...');
+      
+      final newRecipe = {
+        'name': 'CLI Test Recipe ${DateTime.now().millisecondsSinceEpoch}',
+        'description': 'A test recipe created via CLI API test',
+        'recipeInstructions': [
+          {
+            'title': 'Step 1',
+            'text': 'Mix ingredients together'
+          },
+          {
+            'title': 'Step 2', 
+            'text': 'Cook for 20 minutes'
+          }
+        ],
+        'recipeIngredient': [
+          {
+            'quantity': 2.0,
+            'unit': {'name': 'cups'},
+            'food': {'name': 'flour'},
+            'originalText': '2 cups flour'
+          },
+          {
+            'quantity': 1.0,
+            'unit': {'name': 'tsp'},
+            'food': {'name': 'salt'},
+            'originalText': '1 tsp salt'
+          }
+        ],
+        'totalTime': 'PT30M',
+        'prepTime': 'PT10M',
+        'cookTime': 'PT20M',
+        'recipeServings': 4,
+        'tags': [],
+        'recipeCategory': []
+      };
+      
+      print('📤 Sending recipe data...');
+      final response = await _client.dio.post(
+        '/api/recipes',
+        data: newRecipe,
+        options: dio.Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $_accessToken',
+          },
+        ),
+      );
+      
+      print('✅ Manual recipe creation response:');
+      print('  - Status: ${response.statusCode}');
+      print('  - Response data type: ${response.data.runtimeType}');
+      print('  - Response data: ${response.data}');
+      
+      if (response.data is String) {
+        print('  - Created recipe slug: ${response.data}');
+        
+        // Try to fetch the created recipe to verify
+        final createdRecipe = await _client.recipes.getRecipe(response.data);
+        print('  - Verified recipe name: ${createdRecipe.name}');
+        print('  - Recipe ID: ${createdRecipe.id}');
+        print('  - Ingredients count: ${createdRecipe.recipeIngredient?.length ?? 0}');
+        print('  - Instructions count: ${createdRecipe.recipeInstructions?.length ?? 0}');
+      } else if (response.data is Map && response.data['slug'] != null) {
+        print('  - Created recipe slug: ${response.data['slug']}');
+        print('  - Recipe name: ${response.data['name'] ?? 'Unknown'}');
+        print('  - Recipe ID: ${response.data['id'] ?? 'Unknown'}');
+      }
+      
+    } catch (e) {
+      print('❌ Manual recipe creation error: $e');
+      if (e is dio.DioException && e.response != null) {
+        print('  - Status: ${e.response!.statusCode}');
+        print('  - Response: ${e.response!.data}');
+      }
+    }
+    
+    // Note: Image creation test would require actual image files
+    // so we'll skip it for now but document the endpoint
+    print('\n📷 Image-based recipe creation endpoint available at:');
+    print('  - POST /api/recipes/create/image');
+    print('  - Requires multipart/form-data with image files');
+    print('  - Optional translateLanguage query parameter');
+  }
+
   /// Run comprehensive API tests
   Future<void> runAllTests() async {
     print('🚀 Starting Comprehensive API Tests\n');
@@ -508,13 +643,127 @@ class CliApiTest {
     // Run tests
     await testBasicRecipes();
     await testRecipeDetail(); // Add recipe detail test
+    await testRecipeCreation(); // Add recipe creation test
     await testSorting();
     await testSearch();
     await testTagFiltering();
     await testCategoryFiltering();
     
     print('\n' + '=' * 50);
+    // Test Units and Foods endpoints
+    await testUnitsAndFoods();
+
     print('🏁 All tests completed!');
+  }
+
+  /// Test Units and Foods endpoints
+  Future<void> testUnitsAndFoods() async {
+    print('\n🧪 Testing Units and Foods Endpoints...');
+    
+    try {
+      // Test units endpoint
+      print('\n📏 Testing units endpoint...');
+      final unitsResponse = await _client.dio.get('/api/units', queryParameters: {
+        'page': 1,
+        'perPage': 10,
+      });
+      
+      if (unitsResponse.statusCode == 200) {
+        final unitsData = unitsResponse.data;
+        print('✅ Units endpoint successful!');
+        print('📊 Response structure:');
+        print('  - Items count: ${unitsData['items']?.length ?? 0}');
+        print('  - Total: ${unitsData['total']}');
+        print('  - Page: ${unitsData['page']}');
+        print('  - Per page: ${unitsData['perPage']}');
+        
+        if (unitsData['items'] != null && unitsData['items'].isNotEmpty) {
+          print('\n🔍 First few units:');
+          final items = unitsData['items'] as List;
+          for (int i = 0; i < (items.length < 5 ? items.length : 5); i++) {
+            final unit = items[i];
+            print('  ${i + 1}. ${unit['name']} (ID: ${unit['id']})');
+            if (unit['abbreviation'] != null) {
+              print('      Abbreviation: ${unit['abbreviation']}');
+            }
+          }
+        }
+      } else {
+        print('❌ Units endpoint failed with status: ${unitsResponse.statusCode}');
+      }
+
+      // Test foods endpoint
+      print('\n🍎 Testing foods endpoint...');
+      final foodsResponse = await _client.dio.get('/api/foods', queryParameters: {
+        'page': 1,
+        'perPage': 10,
+      });
+      
+      if (foodsResponse.statusCode == 200) {
+        final foodsData = foodsResponse.data;
+        print('✅ Foods endpoint successful!');
+        print('📊 Response structure:');
+        print('  - Items count: ${foodsData['items']?.length ?? 0}');
+        print('  - Total: ${foodsData['total']}');
+        print('  - Page: ${foodsData['page']}');
+        print('  - Per page: ${foodsData['perPage']}');
+        
+        if (foodsData['items'] != null && foodsData['items'].isNotEmpty) {
+          print('\n🔍 First few foods:');
+          final items = foodsData['items'] as List;
+          for (int i = 0; i < (items.length < 5 ? items.length : 5); i++) {
+            final food = items[i];
+            print('  ${i + 1}. ${food['name']} (ID: ${food['id']})');
+            if (food['description'] != null && food['description'].toString().isNotEmpty) {
+              print('      Description: ${food['description']}');
+            }
+          }
+        }
+      } else {
+        print('❌ Foods endpoint failed with status: ${foodsResponse.statusCode}');
+      }
+
+      // Test search functionality for units
+      print('\n🔍 Testing unit search...');
+      final unitSearchResponse = await _client.dio.get('/api/units', queryParameters: {
+        'page': 1,
+        'perPage': 5,
+        'search': 'gram',
+      });
+      
+      if (unitSearchResponse.statusCode == 200) {
+        final searchData = unitSearchResponse.data;
+        print('✅ Unit search successful!');
+        print('🔍 Search results for "gram":');
+        final items = searchData['items'] as List;
+        for (int i = 0; i < items.length; i++) {
+          final unit = items[i];
+          print('  ${i + 1}. ${unit['name']} (${unit['abbreviation'] ?? 'No abbr'}) - ID: ${unit['id']}');
+        }
+      }
+
+      // Test search functionality for foods
+      print('\n🔍 Testing food search...');
+      final foodSearchResponse = await _client.dio.get('/api/foods', queryParameters: {
+        'page': 1,
+        'perPage': 5,
+        'search': 'tomat',
+      });
+      
+      if (foodSearchResponse.statusCode == 200) {
+        final searchData = foodSearchResponse.data;
+        print('✅ Food search successful!');
+        print('🔍 Search results for "tomat":');
+        final items = searchData['items'] as List;
+        for (int i = 0; i < items.length; i++) {
+          final food = items[i];
+          print('  ${i + 1}. ${food['name']} - ID: ${food['id']}');
+        }
+      }
+      
+    } catch (e) {
+      print('❌ Units/Foods testing error: $e');
+    }
   }
 }
 
@@ -554,6 +803,10 @@ void main(List<String> args) async {
       case 'search':
         await tester.authenticate();
         await tester.testSearch();
+        break;
+      case 'recipe-creation':
+        await tester.authenticate();
+        await tester.testRecipeCreation();
         break;
       case 'recipe-detail':
         await tester.authenticate();
